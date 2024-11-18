@@ -1,22 +1,25 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField]private float mouseX, mouseY, rotationX, rotationY;
-    [SerializeField]private Transform orientation;
+    [SerializeField] private float sens;
+    [SerializeField] private Transform orientation;
+    
+    private float mouseX, mouseY, rotationX, rotationY;
+    
     public void onMouseInput(InputAction.CallbackContext context)
     {
         mouseX = context.ReadValue<Vector2>().x;
         mouseY = context.ReadValue<Vector2>().y;
     }
 
-    void Update()
+    private void Update()
     {
-        rotationY += mouseX;
-        rotationX -= mouseY;
+        rotationY += mouseX * Time.deltaTime * sens;
+        rotationX -= mouseY * Time.deltaTime * sens;
         rotationX = Mathf.Clamp(rotationX, -90f, 90f);
+        
         transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         orientation.rotation = Quaternion.Euler(0, rotationY + 90f, 0);
     }
