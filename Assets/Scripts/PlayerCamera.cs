@@ -13,7 +13,11 @@ public class PlayerCamera : MonoBehaviour
         mouseX = context.ReadValue<Vector2>().x;
         mouseY = context.ReadValue<Vector2>().y;
     }
-
+    private void Start()
+    { 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     private void Update()
     {
         rotationY += mouseX * Time.deltaTime * sens;
